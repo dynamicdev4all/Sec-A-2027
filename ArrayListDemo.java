@@ -3,8 +3,7 @@ import java.util.ArrayList;
 public class ArrayListDemo {
     public static void main(String[] args) {
         int arr[] = new int[5];//this is Array init
-        ArrayList<String> list = new ArrayList<>(); // this is ArrayList init
-
+        ArrayList<> list = new ArrayList<>(); // this is ArrayList init
 
         //Data Insertion
         list.add("SampleData");//this is for ArrayList

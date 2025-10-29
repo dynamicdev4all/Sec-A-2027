@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 /**
@@ -31,7 +33,9 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password_key");
 		
 		if(emailAdd.equals("admin@rdec.in") && password.equals("123456")) {
-			response.sendRedirect("home.html");
+			HttpSession session = request.getSession();
+			session.setAttribute("username_key", "Rakesh");
+			response.sendRedirect("home.jsp");
 		}else {
 			System.out.println("Email or Password is invalid");
 		}

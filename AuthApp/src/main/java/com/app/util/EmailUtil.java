@@ -12,7 +12,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
 public class EmailUtil {
-	static void sendRegisterOTP(String to, String userName, int OTP) {
+	public static boolean sendRegisterOTP(String to, String userName, int OTP) {
 		String senderEmail = "piebytwo014@gmail.com";
 		String senderPassword = "oszxwqqplagxqgkx";
 		
@@ -46,16 +46,11 @@ public class EmailUtil {
 							+"Best Regards. \n"
 							+"Team Sec-A.");
 			Transport.send(emailMsg);
-			System.out.println("Email sent success!");
+			return true;
 		} catch (MessagingException e) {
 			e.printStackTrace();
-			System.out.println("Email sent failed");
+			return false;
 		}
 	}
 	
-	
-	public static void main(String s[]) {
-		int OTP = (int)(Math.random() * 900000) + 100000;
-		EmailUtil.sendRegisterOTP("piebytwo014@gmail.com", "Deepak", OTP);
-	}
 }

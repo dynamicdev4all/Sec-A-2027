@@ -5,7 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+
+import com.app.database.DatabaseConnection;
 
 /**
  * Servlet implementation class VerifyOTPServlet
@@ -27,14 +31,16 @@ public class VerifyOTPServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userOTP = request.getParameter("userOTP");
-		
-		if(userOTP == emailOTP) {
-			System.out.println("OTP Verification Success");
+		HttpSession session = request.getSession(false);
+		int emailOTP = (int)(session.getAttribute("emailOTP"));
+		String email = (String)(session.getAttribute("email"));
+		if(Integer.parseInt(userOTP) == emailOTP) {
+			DatabaseConnection.verifyUser(email);
 		}else {
 			System.out.println("OTP Verification Failed");
 		}
 		
-	}
+	} 
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

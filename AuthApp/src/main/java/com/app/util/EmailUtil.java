@@ -14,7 +14,7 @@ import jakarta.mail.internet.MimeMessage;
 public class EmailUtil {
 	public static boolean sendRegisterOTP(String to, String userName, int OTP) {
 		String senderEmail = "piebytwo014@gmail.com";
-		String senderPassword = "oszxwqqplagxqgkx";
+		String senderPassword = "qixlhjfexdzhzizg";
 		
 		
 		Properties emailProperties = new Properties();

@@ -5,8 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
+import com.app.database.DatabaseConnection;
 import com.app.util.EmailUtil;
 
 /**
@@ -32,13 +35,25 @@ public class RegisterServlet extends HttpServlet {
 		String lastName = request.getParameter("lName_key");
 		String emailAdd = request.getParameter("email_key");
 		String password = request.getParameter("password_key");
-		int OTP = (int)(Math.random() * 900000) + 100000;
-		boolean OTPSentStatus = EmailUtil.sendRegisterOTP(emailAdd, firstName + " " + lastName, OTP);
-		if(OTPSentStatus) {
-			response.sendRedirect("verify_otp.html");
+		
+		
+		boolean saveDataStatus =  DatabaseConnection.insertUserData(firstName, lastName, emailAdd, password);
+		
+		if(saveDataStatus) {
+			int OTP = (int)(Math.random() * 900000) + 100000;
+			boolean OTPSentStatus = EmailUtil.sendRegisterOTP(emailAdd, firstName + " " + lastName, OTP);
+			if(OTPSentStatus) {
+				HttpSession session = request.getSession();
+				session.setAttribute("emailOTP", OTP);
+				session.setAttribute("email", emailAdd);
+				response.sendRedirect("verify_otp.html");
+			}else {
+				System.out.println("OTP sent Failed");
+			}
 		}else {
-			System.out.println("OTP sent Failed");
+			System.out.println("Data Save Failed");
 		}
+		
 	}
 
 	/**

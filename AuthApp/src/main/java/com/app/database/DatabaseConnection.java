@@ -29,6 +29,15 @@ public class DatabaseConnection {
 	
 	
 	
+	public static Document loginUser(String email) {
+		Document user = new Document("userEmail", email);
+		Document userFound = c.find(user).first();
+		if(userFound != null) {
+			return userFound;
+		}
+		return null;
+	}
+	
 	public static boolean verifyUser(String mail) {
 		try {
 			Document userToBeSearched = new Document("userEmail", mail);

@@ -6,8 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import shadow.org.bson.Document;
 
 import java.io.IOException;
+import java.lang.annotation.Documented;
+
+import com.app.database.DatabaseConnection;
 
 /**
  * Servlet implementation class LoginServlet
@@ -32,12 +36,22 @@ public class LoginServlet extends HttpServlet {
 		String emailAdd = request.getParameter("email_key");
 		String password = request.getParameter("password_key");
 		
-		if(emailAdd.equals("admin@rdec.in") && password.equals("123456")) {
-			HttpSession session = request.getSession();
-			session.setAttribute("username_key", "Rakesh");
-			response.sendRedirect("home.jsp");
+		Document loginUser =  DatabaseConnection.loginUser(emailAdd);
+		
+		if(loginUser != null) {
+			if(emailAdd.equals(loginUser.getString("userEmail")) && password.equals(loginUser.getString("userPassword")) && loginUser.getBoolean("isVerified")) {
+				HttpSession session = request.getSession();
+				String name = loginUser.getString("firstName") + " " + loginUser.getString("lastName");
+				session.setAttribute("username_key", name);
+				response.sendRedirect("home.jsp");
+			}else if(emailAdd.equals(loginUser.getString("userEmail")) && password.equals(loginUser.getString("userPassword")) && !loginUser.getBoolean("isVerified")) {
+				System.out.println("The account in not verified");
+			}
+			else {
+				System.out.println("Password is invalid");
+			}
 		}else {
-			System.out.println("Email or Password is invalid");
+			System.out.println("No Account Found");
 		}
 	}
 

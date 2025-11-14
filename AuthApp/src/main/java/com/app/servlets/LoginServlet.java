@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		String emailAdd = request.getParameter("email_key");
 		String password = request.getParameter("password_key");
 		
-		Document loginUser =  DatabaseConnection.loginUser(emailAdd);
+		Document loginUser =  DatabaseConnection.findUserInDB(emailAdd);
 		
 		if(loginUser != null) {
 			if(emailAdd.equals(loginUser.getString("userEmail")) && password.equals(loginUser.getString("userPassword")) && loginUser.getBoolean("isVerified")) {

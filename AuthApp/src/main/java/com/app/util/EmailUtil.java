@@ -2,6 +2,8 @@ package com.app.util;
 
 import java.util.Properties;
 
+import com.app.config.AppSecretReader;
+
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -13,8 +15,11 @@ import jakarta.mail.internet.MimeMessage;
 
 public class EmailUtil {
 	public static boolean sendRegisterOTP(String to, String userName, int OTP) {
-		String senderEmail = "piebytwo014@gmail.com";
-		String senderPassword = "debaokioredpendk";
+		String SENDER_EMAIL=AppSecretReader.getPropertiesData("OTP_EMAIL","en", "US");
+		String SENDER_PASSWORD=AppSecretReader.getPropertiesData("OTP_EMAIL_PASSWORD","en", "US");
+		
+		String senderEmail = "";
+		String senderPassword = "";
 		
 		
 		Properties emailProperties = new Properties();

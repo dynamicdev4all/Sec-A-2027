@@ -27,8 +27,8 @@ public class DatabaseConnection {
              .serverApi(serverApi)
              .build();
 	static MongoClient mongoClient = MongoClients.create(settings);
-	static String DB_NAME=AppSecretReader.getPropertiesData("MONOG_DB_NAME","en", "US");
-	static String COL_NAME=AppSecretReader.getPropertiesData("MONOG_COL_NAME","en", "US");
+	static String DB_NAME=AppSecretReader.getPropertiesData("MONGO_DB_NAME","en", "US");
+	static String COL_NAME=AppSecretReader.getPropertiesData("MONGO_COL_NAME","en", "US");
 	static MongoDatabase database = mongoClient.getDatabase(DB_NAME);
 	static MongoCollection<Document> c = database.getCollection(COL_NAME);
 	

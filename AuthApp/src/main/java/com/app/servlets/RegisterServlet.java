@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import com.app.database.DatabaseConnection;
 import com.app.util.EmailUtil;
+import com.app.util.JWTUtil;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -41,7 +42,8 @@ public class RegisterServlet extends HttpServlet {
 		
 		if(saveDataStatus) {
 			int OTP = (int)(Math.random() * 900000) + 100000;
-			boolean OTPSentStatus = EmailUtil.sendRegisterOTP(emailAdd, firstName + " " + lastName, OTP);
+			String token =  JWTUtil.createJWT(emailAdd, firstName + " " + lastName, OTP);
+			boolean OTPSentStatus = EmailUtil.sendRegisterOTP(emailAdd, firstName + " " + lastName, token);
 			if(OTPSentStatus) {
 				HttpSession session = request.getSession();
 				session.setAttribute("emailOTP", OTP);

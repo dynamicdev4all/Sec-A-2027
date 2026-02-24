@@ -32,8 +32,17 @@ public class UserRepository {
 		}
 	}
 	
-	public void login() {
-		
+	public User login(long id, String email, String pass) {
+		User loginUser = viewOne(id);
+		if(loginUser != null) {
+			if(loginUser.getEmail().equals(email) && loginUser.getPass().equals(pass)) {
+				return loginUser;
+			}
+			else {
+				return null;
+			}
+		}
+		return null;
 	}
 	
 	public void update() {

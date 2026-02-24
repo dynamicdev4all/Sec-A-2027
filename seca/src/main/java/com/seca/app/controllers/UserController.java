@@ -1,6 +1,7 @@
 package com.seca.app.controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,13 @@ public class UserController {
 		return repo.viewOne(id);
 	}
 	
-	public void login() {
+	@PostMapping("/user/login/{id}")
+	public String login(@PathVariable long id, Map<String, String> loginUser) {
 		
+		User user = repo.login(id, loginUser.get("email"), loginUser.get("pass"));
+		if(user != null) {
+			return "Login Success.";
+		}
+		return "Login Failed.";
 	}
 }

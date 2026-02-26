@@ -32,6 +32,9 @@ public class UserRepository {
 		}
 	}
 	
+	
+	
+	
 	public User login(long id, String email, String pass) {
 		User loginUser = viewOne(id);
 		if(loginUser != null) {
@@ -44,6 +47,11 @@ public class UserRepository {
 		}
 		return null;
 	}
+	
+	
+	
+	
+	
 	
 	public void update() {
 		

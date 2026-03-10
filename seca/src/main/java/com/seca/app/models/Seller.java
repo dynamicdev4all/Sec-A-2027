@@ -3,6 +3,12 @@ package com.seca.app.models;
 import java.util.ArrayList;
 
 public class Seller {
+	public boolean isBanned() {
+		return isBanned;
+	}
+	public void setBanned(boolean isBanned) {
+		this.isBanned = isBanned;
+	}
 	public Seller(String name, String GST, long id, String address, ArrayList<Item> items) {
 		this.name = name;
 		this.GST = GST;
@@ -45,4 +51,5 @@ public class Seller {
 	long id;
 	String address;
 	ArrayList<Item> items;
+	boolean isBanned;
 }

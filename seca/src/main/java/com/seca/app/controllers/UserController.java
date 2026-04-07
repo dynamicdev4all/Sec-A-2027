@@ -1,15 +1,18 @@
 package com.seca.app.controllers;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.seca.app.dto.UserLoginDTO;
+import com.seca.app.dto.UserLoginResDTO;
 import com.seca.app.models.User;
 import com.seca.app.repositories.UserRepository;
 
@@ -41,11 +44,12 @@ public class UserController {
 	}
 	
 	@PostMapping("/user/login/{id}")
-	public String login(@PathVariable long id, Map<String, String> loginUser) {
+	public String login(@PathVariable UserLoginDTO uDTO ) {
 		
-		User user = repo.login(id, loginUser.get("email"), loginUser.get("pass"));
+		User user = repo.login(uDTO.getId(), uDTO.getEmail(), uDTO.getPass());
 		if(user != null) {
-			return "Login Success.";
+			UserLoginResDTO lDto = new UserLoginResDTO(HttpStatus.OK, "name", "email", 1, "gender");
+			return lDTO;
 		}
 		return "Login Failed.";
 	}
